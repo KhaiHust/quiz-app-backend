@@ -39,4 +39,11 @@ public class QuizController {
                 new ResponeObject("200","update success","")
         );
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ResponeObject> deleteQuizById(@PathVariable Long id){
+        quizService.deleteQuizById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponeObject("200","delete success","")
+        );
+    }
 }
