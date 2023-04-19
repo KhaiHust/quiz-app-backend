@@ -1,14 +1,20 @@
 package com.oop.project.quizapp.services.impl;
 
+import com.oop.project.quizapp.dto.QuestionDto;
 import com.oop.project.quizapp.dto.QuizDto;
 import com.oop.project.quizapp.dto.QuizQuestionDto;
 import com.oop.project.quizapp.dto.Quiz_QuestionDto;
+import com.oop.project.quizapp.models.QuestionMark;
 import com.oop.project.quizapp.models.Quiz;
 import com.oop.project.quizapp.models.QuizQuestion;
+import com.oop.project.quizapp.repositories.QuestionMarkRepository;
 import com.oop.project.quizapp.repositories.QuizQuestionRepository;
 import com.oop.project.quizapp.repositories.QuizRepositories;
 import com.oop.project.quizapp.services.QuizQuestionService;
 import com.oop.project.quizapp.services.QuizService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +26,8 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
     private QuizRepositories quizRepositories;
     @Autowired
     private QuizQuestionRepository quizQuestionRepository;
-
+    @Autowired
+    private QuestionMarkRepository questionMarkRepository;
     @Override
     public Quiz_QuestionDto getAllQuestionByQuizId(Long id) {
         Quiz quiz = quizRepositories.findById(id).orElseThrow(null);
@@ -42,4 +49,26 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
         quiz_QuestionDto.setQuizQuestionSet(new HashSet<>(quizQuestionDtos));
         return quiz_QuestionDto;
     }
+
+//    @Override
+//    public QuestionDto createQuestion(Long quizId,QuestionDto questionDto) {
+//
+////        QuestionMark questionMark = questionMarkRepository.getOne(questionDto.getId());
+////
+////        QuizQuestion quizQuestion = new QuizQuestion();
+////        questionMark.setMark(questionDto.getQuestion_mark());
+////
+////        QuizQuestion quizQuestion = new QuizQuestion();
+////        quizQuestion.setDescription(questionDto.getDescription());
+////        quizQuestion.setImgQuiz(questionDto.getImgQuiz());
+////
+////        quizQuestion.setQuestionMark(questionMark);
+////        questionMark.setQuizQuestion(quizQuestion);
+//
+//
+////        Quiz quiz = quizRepositories.findById(quizId).orElseThrow(null);
+////        quizQuestion.setDescription(quizQuestionDto.getDescription());
+////        quizQuestion.se
+//
+//    }
 }

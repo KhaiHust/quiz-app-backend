@@ -24,6 +24,10 @@ public class QuizQuestion {
     @Column(name = "imgQuiz", columnDefinition = "LONGTEXT")
     private String imgQuiz;
 
+    @OneToOne
+    @JoinColumn(name = "question_mark_id")
+    private QuestionMark questionMark;
+
     @ManyToOne
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
