@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -24,4 +27,7 @@ public class QuizQuestion {
     @ManyToOne
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
+
+    @OneToMany(mappedBy = "quizQuestion", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<QuestionAnswer> questionAnswers = new HashSet<>();
 }
