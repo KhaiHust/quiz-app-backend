@@ -18,7 +18,7 @@ public class QuizQuestion {
     @Column(name = "description", columnDefinition = "TEXT", nullable = false)
     private String description;
 
-    @Column(name = "imgQuiz", columnDefinition = "LONGTEXT", nullable = false)
+    @Column(name = "imgQuiz", columnDefinition = "LONGTEXT")
     private String imgQuiz;
 
     @ManyToOne

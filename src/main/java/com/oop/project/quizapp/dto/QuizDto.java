@@ -1,13 +1,16 @@
 package com.oop.project.quizapp.dto;
 
-import jakarta.persistence.Column;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.oop.project.quizapp.models.Quiz;
+import com.oop.project.quizapp.models.QuizQuestion;
+import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class QuizDto {
     private Long id;
     private String name;
@@ -15,4 +18,5 @@ public class QuizDto {
     private String description;
 
     private Long category_id;
+
 }
