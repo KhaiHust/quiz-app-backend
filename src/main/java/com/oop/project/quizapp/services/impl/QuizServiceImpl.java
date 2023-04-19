@@ -45,4 +45,16 @@ public class QuizServiceImpl implements QuizService {
         quizDto.setCategory_id(quiz.getCategory_id());
         return quizDto;
     }
+
+    @Override
+    public void updateQuizById(QuizDto quizDto, Long id) {
+        Quiz quiz = quizRepositories.findById(id).orElseThrow(null);
+        Quiz newQuiz = mapToEntity(quizDto);
+       if(quiz == null) quizRepositories.save(newQuiz);
+       else {
+           quiz.setName(newQuiz.getName());
+           quiz.setDescription(newQuiz.getDescription());
+           quizRepositories.save(quiz);
+       }
+    }
 }

@@ -32,4 +32,11 @@ public class QuizController {
                 new ResponeObject("200","get all quiz success", quizDtoList)
         );
     }
+    @PutMapping("/{id}")
+    public  ResponseEntity<ResponeObject> updateQuizById(@RequestBody QuizDto quizDto, @PathVariable Long id){
+        quizService.updateQuizById(quizDto, id);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponeObject("200","update success","")
+        );
+    }
 }
