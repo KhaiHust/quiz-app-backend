@@ -11,4 +11,6 @@ public interface QuestionAnswerService {
     public List<Question_AnswerDto> findQuestionAnswerByQuizId(Long quizId);
 
     public void createQA(List<ImportQA> importQAS, Long quizId);
+
+    public void updateQA(Long questionId, ImportQA importQA);
 }

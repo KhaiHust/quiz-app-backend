@@ -31,4 +31,14 @@ public class QuestionAnswerController {
                 new ResponeObject("200","post success", "")
         );
     }
+    @PutMapping("/quiz_id={quiz_id}/question_id={question_id}")
+    public ResponseEntity<ResponeObject> updateQA(
+            @PathVariable(name = "question_id") Long question_id,
+            @RequestBody ImportQA importQA
+    ){
+        questionAnswerService.updateQA(question_id,importQA);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponeObject("200","put success", "")
+        );
+    }
 }

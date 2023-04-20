@@ -83,4 +83,38 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
         }
 
     }
+
+    @Override
+    public void updateQA(Long questionId, ImportQA importQA) {
+        QuizQuestion question = quizQuestionRepository.findById(questionId).orElseThrow(null);
+        question.setDescription(importQA.getDescription());
+        question.setImgQuiz(importQA.getImgQuestion());
+        question.setMark(importQA.getQuestion_mark());
+
+        for (QuestionAnswerDto answerDto : importQA.getQuestionAnswerDtos()) {
+            if (answerDto.getId() != null) {
+                // Update existing QuestionAnswer
+                QuestionAnswer answer = questionAnswerRepository.findById(answerDto.getId())
+                        .orElseThrow(null);
+                answer.setDescription(answerDto.getDescription());
+                answer.setImgAnswer(answerDto.getImgAnswer());
+                answer.setCorrect_answer(answerDto.isCorrect_answer());
+                answer.setScore(answerDto.getScore());
+                answer.setQuizQuestion(question);
+                questionAnswerRepository.save(answer);
+            } else {
+                // Create new QuestionAnswer
+                QuestionAnswer answer = new QuestionAnswer();
+                answer.setDescription(answerDto.getDescription());
+                answer.setImgAnswer(answerDto.getImgAnswer());
+                answer.setCorrect_answer(answerDto.isCorrect_answer());
+                answer.setScore(answerDto.getScore());
+                answer.setQuizQuestion(question);
+                question.getQuestionAnswers().add(answer);
+                questionAnswerRepository.save(answer);
+            }
+        }
+        quizQuestionRepository.save(question);
+    }
+
 }
