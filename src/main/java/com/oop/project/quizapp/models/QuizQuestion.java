@@ -1,16 +1,16 @@
 package com.oop.project.quizapp.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "QuizQuestion")
 public class QuizQuestion {
@@ -24,9 +24,10 @@ public class QuizQuestion {
     @Column(name = "imgQuiz", columnDefinition = "LONGTEXT")
     private String imgQuiz;
 
-    @OneToOne
-    @JoinColumn(name = "question_mark_id")
-    private QuestionMark questionMark;
+    @Column(name = "mark", nullable = false)
+    private Float mark;
+//    @OneToMany(mappedBy = "quizQuestion", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<QuestionMark> questionMark;
 
     @ManyToOne
     @JoinColumn(name = "quiz_id")

@@ -1,11 +1,14 @@
 package com.oop.project.quizapp.services.impl;
 
+import com.oop.project.quizapp.dto.ImportQA;
 import com.oop.project.quizapp.dto.QuestionAnswerDto;
 import com.oop.project.quizapp.dto.Question_AnswerDto;
 import com.oop.project.quizapp.models.QuestionAnswer;
+import com.oop.project.quizapp.models.Quiz;
 import com.oop.project.quizapp.models.QuizQuestion;
 import com.oop.project.quizapp.repositories.QuestionAnswerRepository;
 import com.oop.project.quizapp.repositories.QuizQuestionRepository;
+import com.oop.project.quizapp.repositories.QuizRepositories;
 import com.oop.project.quizapp.services.QuestionAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +23,8 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
     private QuestionAnswerRepository questionAnswerRepository;
     @Autowired
     private QuizQuestionRepository quizQuestionRepository;
-
+    @Autowired
+    private QuizRepositories quizRepositories;
     @Override
     public List<Question_AnswerDto> findQuestionAnswerByQuizId(Long quizId){
         List<Question_AnswerDto> question_answerDtos = new ArrayList<>();
@@ -44,5 +48,39 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
             question_answerDtos.add(question_answerDto);
         }
         return question_answerDtos;
+    }
+
+    @Override
+    public void createQA(List<ImportQA> importQAS, Long quizId) {
+        Quiz quiz = quizRepositories.findById(quizId).orElseThrow(null);
+
+        for (ImportQA importQA:
+             importQAS) {
+            QuizQuestion question = new QuizQuestion();
+            question.setDescription(importQA.getDescription());
+            question.setMark(importQA.getQuestion_mark());
+            question.setImgQuiz(importQA.getImgQuestion());
+            question.setQuiz(quiz);
+            quiz.getQuizQuestions().add(question);
+
+            QuizQuestion question1 = quizQuestionRepository.save(question);
+            quizRepositories.save(quiz);
+
+            for (QuestionAnswerDto answer :
+                    importQA.getQuestionAnswerDtos()) {
+                QuestionAnswer newAnswer = new QuestionAnswer();
+                newAnswer.setDescription(answer.getDescription());
+                newAnswer.setImgAnswer(answer.getImgAnswer());
+                newAnswer.setCorrect_answer(answer.isCorrect_answer());
+                newAnswer.setScore(answer.getScore());
+                newAnswer.setQuizQuestion(question1);
+                question1.getQuestionAnswers().add(newAnswer);
+
+                questionAnswerRepository.save(newAnswer);
+
+                quizQuestionRepository.save(question1);
+            }
+        }
+
     }
 }

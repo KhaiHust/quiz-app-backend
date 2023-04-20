@@ -1,13 +1,12 @@
 package com.oop.project.quizapp.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "QuestionAnswer")
 public class QuestionAnswer {
@@ -25,7 +24,7 @@ public class QuestionAnswer {
     private boolean correct_answer;
 
     @Column(name = "score", nullable = false, columnDefinition = "FLOAT default 0")
-    private float score;
+    private Float score;
 
     @ManyToOne
     @JoinColumn(name = "quizQuestion_id")

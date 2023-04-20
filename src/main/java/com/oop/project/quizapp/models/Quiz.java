@@ -2,9 +2,7 @@ package com.oop.project.quizapp.models;
 
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +11,8 @@ import java.util.Set;
 @Table(name = "Quiz")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +24,7 @@ public class Quiz {
     private String description;
     @Column(name = "category_id", nullable = false)
     private Long category_id;
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Set<QuizQuestion> quizQuestions = new HashSet<>();
 
 }
