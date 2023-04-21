@@ -38,7 +38,7 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
         quiz_QuestionDto.setId(quiz.getId());
         quiz_QuestionDto.setName(quiz.getName());
         quiz_QuestionDto.setDescription(quiz.getDescription());
-        quiz_QuestionDto.setCategory_id(quiz.getCategory_id());
+
         quiz_QuestionDto.setQuizQuestionSet(new HashSet<>(quizQuestionDtos));
         return quiz_QuestionDto;
     }
@@ -48,7 +48,7 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
 //        System.out.println(questionDto.toString());
 //        QuestionMark questionMark = new QuestionMark();
 //        questionMark.setMark(questionDto.getQuestion_mark());
-//
+
         Quiz quiz = quizRepositories.findById(quizId).orElseThrow(null);
 //
         QuizQuestion quizQuestion = new QuizQuestion();

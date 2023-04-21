@@ -17,7 +17,7 @@ public class Quiz_QuestionDto {
 
     private String description;
 
-    private Long category_id;
+//    private Long category_id;
     private Set<QuizQuestionDto> quizQuestionSet;
 
     public static Quiz_QuestionDto fromEntity(Quiz quiz){
@@ -25,7 +25,7 @@ public class Quiz_QuestionDto {
         quizDto.setId(quiz.getId());
         quizDto.setName(quiz.getName());
         quizDto.setDescription(quiz.getDescription());
-        quizDto.setCategory_id(quiz.getCategory_id());
+//        quizDto.setCategory_id(quiz.getCategory_id());
         Set<QuizQuestionDto> quizQuestionDtos = new HashSet<>();
         if (quiz.getQuizQuestions() != null){
             for (QuizQuestion quizQuestion : quiz.getQuizQuestions() ){

@@ -1,10 +1,12 @@
 package com.oop.project.quizapp.dto;
 
+
 import com.oop.project.quizapp.models.Quiz;
-import com.oop.project.quizapp.models.QuizQuestion;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -17,6 +19,9 @@ public class QuizDto {
 
     private String description;
 
-    private Long category_id;
+    private Long parentID;
+    private Quiz parent;
+
+    private List<QuizDto> children = new ArrayList<>();
 
 }

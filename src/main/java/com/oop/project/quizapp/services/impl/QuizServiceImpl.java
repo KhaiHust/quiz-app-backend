@@ -7,6 +7,7 @@ import com.oop.project.quizapp.services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,50 +18,46 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public QuizDto createQuiz(QuizDto quizDto) {
-        Quiz quiz = mapToEntity(quizDto);
-        Quiz newQuiz = quizRepositories.save(quiz);
-        QuizDto responeQuiz = mapToDTO(newQuiz);
-        return responeQuiz;
+        Quiz quiz = new Quiz();
+        quiz.setName(quizDto.getName());
+        quiz.setDescription(quizDto.getDescription());
+        if (quizDto.getParentID() != null) {
+            Quiz parent = quizRepositories.findById(quizDto.getParentID())
+                    .orElseThrow(() -> new IllegalArgumentException("Parent category not found"));
+            quiz.setParent(parent);
+        }
+        Quiz saveQuiz = quizRepositories.save(quiz);
+        QuizDto quizDto1 = new QuizDto();
+        quizDto1.setId(saveQuiz.getId());
+        quizDto1.setName(quiz.getName());
+        quizDto1.setDescription(saveQuiz.getDescription());
+        return quizDto;
     }
 
     @Override
     public List<QuizDto> getAllQuiz() {
         List<Quiz> quizList = quizRepositories.findAll();
-        List<QuizDto> quizDtoList = quizList.stream().map(quiz -> mapToDTO(quiz)).collect(Collectors.toList());
+        List<QuizDto> quizDtoList = new ArrayList<>();
+        for (Quiz quiz : quizList) {
+            if (quiz.getParent() == null) {
+                QuizDto quizDto = buildQuizDto(quiz);
+                quizDtoList.add(quizDto);
+            }
+        }
         return quizDtoList;
     }
 
-    private Quiz mapToEntity(QuizDto quizDto){
-        Quiz quiz = new Quiz();
-        quiz.setName(quizDto.getName());
-        quiz.setDescription(quizDto.getDescription());
-        quiz.setCategory_id(quizDto.getCategory_id());
-        return quiz;
-    }
-    private QuizDto mapToDTO(Quiz quiz){
+    private QuizDto buildQuizDto(Quiz quiz) {
         QuizDto quizDto = new QuizDto();
         quizDto.setId(quiz.getId());
         quizDto.setName(quiz.getName());
         quizDto.setDescription(quiz.getDescription());
-        quizDto.setCategory_id(quiz.getCategory_id());
+        List<QuizDto> children = new ArrayList<>();
+        for (Quiz child : quiz.getChildren()) {
+            children.add(buildQuizDto(child));
+        }
+        quizDto.setChildren(children);
         return quizDto;
-    }
-
-    @Override
-    public void updateQuizById(QuizDto quizDto, Long id) {
-        Quiz quiz = quizRepositories.findById(id).orElseThrow(null);
-        Quiz newQuiz = mapToEntity(quizDto);
-       if(quiz == null) quizRepositories.save(newQuiz);
-       else {
-           quiz.setName(newQuiz.getName());
-           quiz.setDescription(newQuiz.getDescription());
-           quizRepositories.save(quiz);
-       }
-    }
-
-    @Override
-    public void deleteQuizById(Long id) {
-        quizRepositories.deleteById(id);
     }
 
 
