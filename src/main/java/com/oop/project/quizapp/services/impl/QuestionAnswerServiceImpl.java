@@ -42,7 +42,7 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
                 questionAnswerDtos.add(questionAnswerDto);
             }
             Question_AnswerDto question_answerDto = new Question_AnswerDto(
-                    question.getId(), question.getDescription(), question.getImgQuiz(),
+                    question.getId(),question.getName(), question.getDescription(), question.getImgQuiz(),
                     new HashSet<>(questionAnswerDtos)
             );
             question_answerDtos.add(question_answerDto);
@@ -57,6 +57,7 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
         for (ImportQA importQA:
              importQAS) {
             QuizQuestion question = new QuizQuestion();
+            question.setName(importQA.getName());
             question.setDescription(importQA.getDescription());
             question.setMark(importQA.getQuestion_mark());
             question.setImgQuiz(importQA.getImgQuestion());

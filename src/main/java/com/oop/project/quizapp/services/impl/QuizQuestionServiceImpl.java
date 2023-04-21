@@ -29,6 +29,7 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
         for (QuizQuestion question : quizQuestion){
             QuizQuestionDto quizQuestionDto = new QuizQuestionDto();
             quizQuestionDto.setId(question.getId());
+            quizQuestionDto.setName(question.getName());
             quizQuestionDto.setDescription(question.getDescription());
             quizQuestionDto.setImgQuiz(question.getImgQuiz());
             quizQuestionDtos.add(quizQuestionDto);
@@ -53,6 +54,7 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
         QuizQuestion quizQuestion = new QuizQuestion();
 
         quizQuestion.setDescription(questionDto.getDescription());
+        quizQuestion.setName(questionDto.getName());
         quizQuestion.setImgQuiz(questionDto.getImgQuiz());
         quizQuestion.setMark(questionDto.getQuestion_mark());
         quizQuestion.setQuiz(quiz);
@@ -62,6 +64,6 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
         quiz.getQuizQuestions().add(quizQuestion);
         quizRepositories.save(quiz); // Save the parent Quiz entity after adding the QuizQuestion to the quizQuestions set
 //
-        return new QuestionDto(quizQuestion.getId(), quizQuestion.getDescription(), quizQuestion.getImgQuiz(), questionDto.getQuestion_mark());
+        return new QuestionDto(quizQuestion.getId(),quizQuestion.getName(), quizQuestion.getDescription(), quizQuestion.getImgQuiz(), questionDto.getQuestion_mark());
     }
 }

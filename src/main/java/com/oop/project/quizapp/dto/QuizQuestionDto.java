@@ -16,7 +16,7 @@ import lombok.Setter;
 public class QuizQuestionDto {
 
     private Long id;
-
+    private String name;
     private String description;
 
     private String imgQuiz;

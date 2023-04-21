@@ -15,6 +15,7 @@ import java.util.Set;
 
 public class Question_AnswerDto {
     private Long id;
+    private String name;
     private String description;
     private String imgQuiz;
     private Set<QuestionAnswerDto> questionAnswerSet;

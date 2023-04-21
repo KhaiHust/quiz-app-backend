@@ -16,7 +16,8 @@ public class QuizQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(name = "name", columnDefinition = "TEXT")
+    private String name;
     @Column(name = "description", columnDefinition = "TEXT", nullable = false)
     private String description;
 

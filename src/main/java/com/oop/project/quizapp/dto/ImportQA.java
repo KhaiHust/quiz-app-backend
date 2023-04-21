@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 public class ImportQA {
     private Long id;
-
+    private String name;
     private String description;
 
     private String imgQuestion;
