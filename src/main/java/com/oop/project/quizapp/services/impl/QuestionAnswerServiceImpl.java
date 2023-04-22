@@ -118,4 +118,47 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
         quizQuestionRepository.save(question);
     }
 
+    @Override
+    public List<Question_AnswerDto> findQASubCateByQuizId(Long quizId) {
+        Quiz quiz = quizRepositories.findById(quizId).orElseThrow(null);
+        return findQASubCate(quiz);
+    }
+
+    public List<Question_AnswerDto> findQASubCate(Quiz quiz) {
+//        Quiz quiz = quizRepositories.findById(quizId).orElseThrow(null);
+        List<Question_AnswerDto> question_answerDtos = new ArrayList<>();
+        List<QuizQuestion> quizQuestions = quizQuestionRepository.findByQuizId(quiz.getId());
+        if(quizQuestions != null && !quizQuestions.isEmpty()){
+            for (QuizQuestion question:
+                    quizQuestions) {
+
+                List<QuestionAnswer> questionAnswers = questionAnswerRepository.findByQuizQuestionId(question.getId());
+                List<QuestionAnswerDto> questionAnswerDtos = new ArrayList<>();
+                for (QuestionAnswer answer :
+                        questionAnswers) {
+                    QuestionAnswerDto questionAnswerDto = new QuestionAnswerDto(
+                            answer.getId(), answer.getDescription(), answer.getImgAnswer(), answer.isCorrect_answer(), answer.getScore()
+                    );
+                    questionAnswerDtos.add(questionAnswerDto);
+                }
+                Question_AnswerDto question_answerDto = new Question_AnswerDto(
+                        question.getId(),question.getName(), question.getDescription(), question.getImgQuiz(),
+                        new HashSet<>(questionAnswerDtos)
+                );
+                question_answerDtos.add(question_answerDto);
+            }
+        }
+        List<Quiz> subQuiz = quizRepositories.findByParentId(quiz.getId());
+
+        if(subQuiz != null && !subQuiz.isEmpty()){
+            for (Quiz subquiz : subQuiz){
+                System.out.println(subquiz.getName());
+                List<Question_AnswerDto> subQuizList = findQASubCate(subquiz);
+                if (subQuizList != null && !subQuizList.isEmpty()){
+                    question_answerDtos.addAll(subQuizList);
+                }
+            }
+        }
+        return question_answerDtos;
+    }
 }

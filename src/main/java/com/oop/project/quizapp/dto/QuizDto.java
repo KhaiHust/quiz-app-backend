@@ -21,7 +21,7 @@ public class QuizDto {
 
     private Long parentID;
     private Quiz parent;
-
+    private Long totalQuestion;
     private List<QuizDto> children = new ArrayList<>();
 
 }

@@ -2,6 +2,8 @@ package com.oop.project.quizapp.services.impl;
 
 import com.oop.project.quizapp.dto.QuizDto;
 import com.oop.project.quizapp.models.Quiz;
+import com.oop.project.quizapp.models.QuizQuestion;
+import com.oop.project.quizapp.repositories.QuizQuestionRepository;
 import com.oop.project.quizapp.repositories.QuizRepositories;
 import com.oop.project.quizapp.services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,8 @@ import java.util.stream.Collectors;
 public class QuizServiceImpl implements QuizService {
     @Autowired
     private QuizRepositories quizRepositories;
-
+    @Autowired
+    private QuizQuestionRepository quizQuestionRepository;
     @Override
     public QuizDto createQuiz(QuizDto quizDto) {
         Quiz quiz = new Quiz();
@@ -52,6 +55,7 @@ public class QuizServiceImpl implements QuizService {
         quizDto.setId(quiz.getId());
         quizDto.setName(quiz.getName());
         quizDto.setDescription(quiz.getDescription());
+        quizDto.setTotalQuestion(countQuestion(quiz.getId()));
         List<QuizDto> children = new ArrayList<>();
         for (Quiz child : quiz.getChildren()) {
             children.add(buildQuizDto(child));
@@ -60,5 +64,8 @@ public class QuizServiceImpl implements QuizService {
         return quizDto;
     }
 
+    private Long countQuestion(Long quizId){
+        return quizQuestionRepository.countByQuizId(quizId);
+    }
 
 }

@@ -24,6 +24,12 @@ public class QuestionAnswerController {
                         questionAnswerService.findQuestionAnswerByQuizId(quiz_id))
         );
     }
+    @GetMapping("/subquiz/quiz_id={quiz_id}")
+    public ResponseEntity<ResponeObject> getAllQASubQuiz(@PathVariable Long quiz_id){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponeObject("200","get success",questionAnswerService.findQASubCateByQuizId(quiz_id))
+        );
+    }
     @PostMapping("/quiz_id={quiz_id}")
     public ResponseEntity<ResponeObject> createQA(@PathVariable Long quiz_id, @RequestBody List<ImportQA> importQAList){
         questionAnswerService.createQA(importQAList, quiz_id);
@@ -41,4 +47,5 @@ public class QuestionAnswerController {
                 new ResponeObject("200","put success", "")
         );
     }
+
 }
