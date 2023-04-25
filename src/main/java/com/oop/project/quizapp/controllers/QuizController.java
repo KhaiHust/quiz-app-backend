@@ -2,6 +2,7 @@ package com.oop.project.quizapp.controllers;
 
 import com.oop.project.quizapp.dto.QuizDto;
 import com.oop.project.quizapp.models.ResponeObject;
+import com.oop.project.quizapp.services.QuestionAnswerService;
 import com.oop.project.quizapp.services.QuizService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,8 @@ import java.util.List;
 public class QuizController {
     @Autowired
     private QuizService quizService;
-
+    @Autowired
+    private QuestionAnswerService questionAnswerService;
     @PostMapping
     public ResponseEntity<ResponeObject> createNewQuiz(@RequestBody QuizDto quizDto){
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -31,5 +33,6 @@ public class QuizController {
                 new ResponeObject("200","get all quiz success", quizDtoList)
         );
     }
+
 
 }

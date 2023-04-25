@@ -161,4 +161,27 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
         }
         return question_answerDtos;
     }
+    @Override
+    public Question_AnswerDto getQuestionById(Long ques_id){
+        QuizQuestion question = quizQuestionRepository.findById(ques_id).orElseThrow(null);
+        List<QuestionAnswer> questionAnswers = questionAnswerRepository.findByQuizQuestionId(ques_id).stream().toList();
+
+        Question_AnswerDto question_answerDto = new Question_AnswerDto();
+
+        question_answerDto.setId(question.getId());
+        question_answerDto.setName(question.getName());
+        question_answerDto.setDescription(question.getDescription());
+        question_answerDto.setImgQuiz(question.getImgQuiz());
+        List<QuestionAnswerDto> questionAnswerDtoList = new ArrayList<>();
+        for (QuestionAnswer answer : questionAnswers){
+            QuestionAnswerDto questionAnswerDto = new QuestionAnswerDto(
+                    answer.getId(), answer.getDescription(), answer.getImgAnswer(), answer.isCorrect_answer(), answer.getScore()
+            );
+
+            questionAnswerDtoList.add(questionAnswerDto);
+        }
+        question_answerDto.setQuestionAnswerSet(new HashSet<>(questionAnswerDtoList));
+        return  question_answerDto;
+    }
+
 }

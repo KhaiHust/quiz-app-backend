@@ -15,4 +15,6 @@ public interface QuestionAnswerService {
 
     public void updateQA(Long questionId, ImportQA importQA);
     public List<Question_AnswerDto> findQASubCateByQuizId(Long quizId);
+
+    public Question_AnswerDto getQuestionById(Long ques_id);
 }

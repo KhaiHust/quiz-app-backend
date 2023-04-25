@@ -12,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-
+@Setter
 public class Question_AnswerDto {
     private Long id;
     private String name;
