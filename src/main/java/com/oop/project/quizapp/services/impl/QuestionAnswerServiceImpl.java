@@ -88,6 +88,7 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
     @Override
     public void updateQA(Long questionId, ImportQA importQA) {
         QuizQuestion question = quizQuestionRepository.findById(questionId).orElseThrow(null);
+        question.setName(question.getName());
         question.setDescription(importQA.getDescription());
         question.setImgQuiz(importQA.getImgQuestion());
         question.setMark(importQA.getQuestion_mark());
