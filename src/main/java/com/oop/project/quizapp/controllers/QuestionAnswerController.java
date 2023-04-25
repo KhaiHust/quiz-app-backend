@@ -2,6 +2,7 @@ package com.oop.project.quizapp.controllers;
 
 import com.oop.project.quizapp.dto.ImportQA;
 import com.oop.project.quizapp.models.ResponeObject;
+import com.oop.project.quizapp.services.QuestionAnswerService;
 import com.oop.project.quizapp.services.impl.QuestionAnswerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,7 @@ import java.util.List;
 @RequestMapping("/api/v1/answer")
 public class QuestionAnswerController {
     @Autowired
-    private QuestionAnswerServiceImpl questionAnswerService;
+    private QuestionAnswerService questionAnswerService;
     @GetMapping("/quiz_id={quiz_id}")
     public ResponseEntity<ResponeObject> getAllQuestionAnswerByQuizId(
             @PathVariable Long quiz_id
@@ -48,4 +49,16 @@ public class QuestionAnswerController {
         );
     }
 
+    @GetMapping("/quizId={quizId}/pageNo={pageNo}/pageSize={pageSize}")
+    public ResponseEntity<ResponeObject> getQAPagination(
+            @PathVariable(value = "quizId") Long quizId,
+            @PathVariable(value = "pageNo") Long pageNo,
+            @PathVariable(value = "pageSize") Long pageSize
+    ){
+        return ResponseEntity.status(HttpStatus.OK).body(
+             new ResponeObject("200","get success",questionAnswerService.QAwithPagination(quizId, pageNo,pageSize)
+             )
+        );
+
+    }
 }

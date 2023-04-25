@@ -17,4 +17,6 @@ public interface QuestionAnswerService {
     public List<Question_AnswerDto> findQASubCateByQuizId(Long quizId);
 
     public Question_AnswerDto getQuestionById(Long ques_id);
+
+    public  List<Question_AnswerDto> QAwithPagination(Long quizId,Long pageNo, Long pageSize);
 }

@@ -1,6 +1,7 @@
 package com.oop.project.quizapp.services.impl;
 
 import com.oop.project.quizapp.dto.ImportQA;
+import com.oop.project.quizapp.dto.Pagination;
 import com.oop.project.quizapp.dto.QuestionAnswerDto;
 import com.oop.project.quizapp.dto.Question_AnswerDto;
 import com.oop.project.quizapp.models.QuestionAnswer;
@@ -11,11 +12,16 @@ import com.oop.project.quizapp.repositories.QuizQuestionRepository;
 import com.oop.project.quizapp.repositories.QuizRepositories;
 import com.oop.project.quizapp.services.QuestionAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+//import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionAnswerServiceImpl implements QuestionAnswerService {
@@ -185,4 +191,31 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
         return  question_answerDto;
     }
 
+    @Override
+    public List<Question_AnswerDto> QAwithPagination(Long quizId,Long pageNo, Long pageSize) {
+        Pageable pageable = PageRequest.of(pageNo.intValue(), pageSize.intValue());
+
+//        List<QuizQuestion> quizQuestionList = quizQuestionRepository.findByQuizId(quizId,pageable).getContent().stream().toList();
+
+        List<Question_AnswerDto> question_answerDtos =
+                quizQuestionRepository.findByQuizId(quizId,pageable).getContent().stream().map(question -> mapToDTO(question)).collect(Collectors.toList());
+        return question_answerDtos;
+    }
+
+    public Question_AnswerDto mapToDTO(QuizQuestion question){
+        List<QuestionAnswer> answers = questionAnswerRepository.findByQuizQuestionId(question.getId());
+        List<QuestionAnswerDto> questionAnswerDtoList = new ArrayList<>();
+        for (QuestionAnswer answer :
+                answers) {
+            questionAnswerDtoList.add(
+                    new QuestionAnswerDto(answer.getId(), answer.getDescription(),
+                            answer.getImgAnswer(), answer.isCorrect_answer(), answer.getScore())
+            );
+        }
+        return new Question_AnswerDto(
+                question.getId(), question.getName(), question.getDescription(),
+                question.getImgQuiz(), //new Set<>(question.getQuestionAnswers()
+          new HashSet<> (questionAnswerDtoList)
+        );
+    }
 }
