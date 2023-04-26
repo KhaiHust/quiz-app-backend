@@ -94,7 +94,7 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
     @Override
     public void updateQA(Long questionId, ImportQA importQA) {
         QuizQuestion question = quizQuestionRepository.findById(questionId).orElseThrow(null);
-        question.setName(question.getName());
+        question.setName(importQA.getName());
         question.setDescription(importQA.getDescription());
         question.setImgQuiz(importQA.getImgQuestion());
         question.setMark(importQA.getQuestion_mark());
@@ -195,7 +195,7 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
     public List<Question_AnswerDto> QAwithPagination(Long quizId,Long pageNo, Long pageSize) {
         Pageable pageable = PageRequest.of(pageNo.intValue(), pageSize.intValue());
 
-//        List<QuizQuestion> quizQuestionList = quizQuestionRepository.findByQuizId(quizId,pageable).getContent().stream().toList();
+//List<QuizQuestion> quizQuestionList = quizQuestionRepository.findByQuizId(quizId,pageable).getContent().stream().toList();
 
         List<Question_AnswerDto> question_answerDtos =
                 quizQuestionRepository.findByQuizId(quizId,pageable).getContent().stream().map(question -> mapToDTO(question)).collect(Collectors.toList());
