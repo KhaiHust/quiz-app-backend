@@ -3,7 +3,9 @@ package com.oop.project.quizapp.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -35,4 +37,7 @@ public class QuizQuestion {
 
     @OneToMany(mappedBy = "quizQuestion", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<QuestionAnswer> questionAnswers = new HashSet<>();
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ExamQuestion> examQuestions = new ArrayList<>();
 }
