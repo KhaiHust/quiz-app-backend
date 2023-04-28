@@ -47,7 +47,7 @@ public class ExamServiceImpl implements ExamService {
         exam.setId(examDto.getId());
         exam.setName(examDto.getName());
         exam.setDescription(examDto.getDescription());
-        examDto.setTimeLimit(examDto.getTimeLimit());
+        exam.setTimeLimit(examDto.getTimeLimit());
         return exam;
     }
 }

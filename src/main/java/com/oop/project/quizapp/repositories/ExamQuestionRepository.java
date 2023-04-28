@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface ExamQuestionRepository extends JpaRepository<ExamQuestion, ExamQuestionId> {
     List<ExamQuestion> findByExamId(Long exam_id);
+    void deleteByExamIdAndQuestionId(Long exam_id, Long quizQuestionId);
+
 }

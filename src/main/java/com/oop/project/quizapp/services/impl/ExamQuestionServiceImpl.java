@@ -13,6 +13,7 @@ import com.oop.project.quizapp.services.ExamQuestionService;
 import com.oop.project.quizapp.services.QuestionAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,20 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
         return mapToDto(examQuestion);
     }
 
+    @Override
+    public void createQAByExamId(Long exam_id, List<ExamQuestionDto> examQuestionDtoList) {
+        for (ExamQuestionDto examQuestionDto : examQuestionDtoList){
+            examQuestionDto.setExamId(exam_id);
+            examQuestionRepository.save(mapToEnity(examQuestionDto));
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteQAbyQuesIdByExamId(Long exam_id, ExamQuestionDto examQuestionDto) {
+        examQuestionRepository.deleteByExamIdAndQuestionId(exam_id, examQuestionDto.getQuizQuestionId());
+    }
+
     public ExamQuestion mapToEnity(ExamQuestionDto examQuestionDto){
         ExamQuestion examQuestion = new ExamQuestion();
         ExamQuestionId examQuestionId = new ExamQuestionId(examQuestionDto.getExamId(), examQuestionDto.getQuizQuestionId());
@@ -70,4 +85,5 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
         examQuestionDto.setQuizQuestionId(examQuestion.getQuestion().getId());
         return examQuestionDto;
     }
+
 }
