@@ -27,4 +27,7 @@ public class Exam {
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
     private List<ExamQuestion> examQuestions = new ArrayList<>();
 
+    @Column(name = "suffer", nullable = false)
+    private Boolean suffer;
+
 }

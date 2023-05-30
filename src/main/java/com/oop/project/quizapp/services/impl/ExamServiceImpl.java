@@ -39,7 +39,7 @@ public class ExamServiceImpl implements ExamService {
     }
     public ExamDto mapToDto(Exam exam){
         return new ExamDto(
-                exam.getId(), exam.getName(), exam.getDescription(), exam.getTimeLimit()
+                exam.getId(), exam.getName(), exam.getDescription(), exam.getTimeLimit(), exam.getSuffer()
         );
     }
     public Exam mapToEntity(ExamDto examDto){
@@ -48,6 +48,7 @@ public class ExamServiceImpl implements ExamService {
         exam.setName(examDto.getName());
         exam.setDescription(examDto.getDescription());
         exam.setTimeLimit(examDto.getTimeLimit());
+        exam.setSuffer(examDto.getSuffer());
         return exam;
     }
 }

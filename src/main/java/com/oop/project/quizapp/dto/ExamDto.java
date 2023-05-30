@@ -15,4 +15,5 @@ public class ExamDto {
     private String name;
     private String description;
     private Long timeLimit;
+    private Boolean suffer;
 }
