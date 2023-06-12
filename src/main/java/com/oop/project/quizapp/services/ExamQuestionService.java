@@ -11,5 +11,5 @@ public interface ExamQuestionService {
 
     public void createQAByExamId(Long exam_id, List<ExamQuestionDto> examQuestionDtoList);
 
-    public void deleteQAbyQuesIdByExamId(Long exam_id, ExamQuestionDto examQuestionDto);
+    public void deleteQAbyQuesIdByExamId(Long exam_id, List<ExamQuestionDto> examQuestionDtoList);
 }

@@ -44,7 +44,7 @@ public class ExamQuestionController {
     }
     @DeleteMapping("/exam_id={exam_id}")
     public  ResponseEntity<ResponeObject> deleteQuestionByExamId(
-            @PathVariable Long exam_id, @RequestBody ExamQuestionDto examQuestionDtoList
+            @PathVariable Long exam_id, @RequestBody List<ExamQuestionDto> examQuestionDtoList
     ){
         examQuestionService.deleteQAbyQuesIdByExamId(exam_id, examQuestionDtoList);
         return ResponseEntity.status(HttpStatus.OK).body(

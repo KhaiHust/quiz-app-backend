@@ -61,8 +61,11 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
 
     @Override
     @Transactional
-    public void deleteQAbyQuesIdByExamId(Long exam_id, ExamQuestionDto examQuestionDto) {
-        examQuestionRepository.deleteByExamIdAndQuestionId(exam_id, examQuestionDto.getQuizQuestionId());
+    public void deleteQAbyQuesIdByExamId(Long exam_id, List<ExamQuestionDto> examQuestionDtoList) {
+        for (ExamQuestionDto examQuestionDto : examQuestionDtoList){
+            examQuestionRepository.deleteByExamIdAndQuestionId(exam_id, examQuestionDto.getQuizQuestionId());
+        }
+
     }
 
     public ExamQuestion mapToEnity(ExamQuestionDto examQuestionDto){
