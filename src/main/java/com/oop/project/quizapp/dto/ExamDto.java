@@ -16,4 +16,5 @@ public class ExamDto {
     private String description;
     private Long timeLimit;
     private Boolean suffer;
+    private Float grade;
 }

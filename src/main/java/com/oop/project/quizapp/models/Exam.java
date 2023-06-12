@@ -29,5 +29,7 @@ public class Exam {
 
     @Column(name = "suffer", nullable = false)
     private Boolean suffer;
+    @Column(name="grade", columnDefinition = "float default 10.0")
+    private Float grade;
 
 }
